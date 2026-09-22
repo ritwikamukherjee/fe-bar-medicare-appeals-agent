@@ -1,4 +1,4 @@
-# FE Bar — Submission narrative (paste into the form fields)
+# FE Bar - Submission narrative (paste into the form fields)
 
 > These are drafted answers for the six narrative fields on the FE Bar submission form.
 > Everything is anchored to real, executed output in [`evidence/RUN_EVIDENCE.md`](evidence/RUN_EVIDENCE.md).
@@ -13,13 +13,13 @@
 A national Medicaid / Medicare Advantage managed-care payer (anonymized; synthetic data used throughout).
 
 ## Industry / vertical
-Healthcare — health insurance payer (government-sponsored managed care: Medicare Advantage, Medicaid, D-SNP).
+Healthcare - health insurance payer (government-sponsored managed care: Medicare Advantage, Medicaid, D-SNP).
 
 ## What is the business challenge you are solving? *
 A health plan's claims-operations team is overwhelmed by denied-claim **appeals and
 grievances**. To triage a single case, a worker pieces together answers from separate
-systems — is the member eligible, why was the claim denied, has the provider been flagged,
-what clinical evidence supports medical necessity — which is slow and inconsistent, and it
+systems - is the member eligible, why was the claim denied, has the provider been flagged,
+what clinical evidence supports medical necessity - which is slow and inconsistent, and it
 runs against regulated CMS turnaround clocks. Worse, a large share of denials are
 **overturned on appeal**, so the plan pays to adjudicate the same claim twice and erodes
 the member and provider experience. The team needs to (1) triage any appeal in seconds with
@@ -30,17 +30,17 @@ can prevent avoidable rework and route payment-integrity risk to the front of th
 An **end-to-end data journey on Databricks**, integrated across six layers over one governed
 schema (`hls_amer_catalog.`​`` `appeals-review` ``):
 
-1. **Lakeflow** ingests synthetic payer data — members, providers, claims, prior
+1. **Lakeflow** ingests synthetic payer data - members, providers, claims, prior
    authorizations, eligibility, appeals, Salesforce cases, and a fraud reference
    (33,500 claims, 2,305 appeals, 5,300 members, 17,168 prior auths; see evidence §1).
 2. **Unity Catalog** governs it: a declared **6 primary-key + 14 foreign-key (RELY)** graph
    plus **8 certified metric views** (overturn rate, denial dollars, provider risk, fraud
    exposure, GLP-1 utilization, eligibility coverage) and enriched column comments/synonyms.
-   This semantic ontology is what makes natural-language answers trustworthy (evidence §2–§4).
+   This semantic ontology is what makes natural-language answers trustworthy (evidence §2-§4).
 3. **Lakebase** (managed Postgres + pgvector) serves the free-text **case narratives** for
    sub-second **hybrid search** (vector + BM25 with reciprocal-rank fusion) so a member-services
    rep instantly finds similar prior cases when a member calls.
-4. **Gen AI — a Multi-Agent Supervisor** routes each question to the right tool (a Genie
+4. **Gen AI - a Multi-Agent Supervisor** routes each question to the right tool (a Genie
    space for aggregate/trend questions, Unity Catalog SQL functions for per-member and
    per-claim briefs, and a ClinicalTrials.gov MCP for medical-necessity evidence) and
    synthesizes one answer.
@@ -77,16 +77,16 @@ LLM-as-judge scaffolding) for the agent.
   gracefully instead of taking the endpoint down. Trade-off: managed simplicity vs. resilience.
 - **Lakebase for operational serving vs. serving from the lakehouse.** Case-narrative search
   needs OLTP-style latency and hybrid (vector + keyword) retrieval, so it belongs in Lakebase
-  Postgres, while analytics stays on the lakehouse — one journey, right engine per job.
+  Postgres, while analytics stays on the lakehouse - one journey, right engine per job.
 
 ## What are the business outcomes and impact?
 - **Faster triage.** One governed answer per appeal in seconds instead of a multi-system,
-  multi-minute hunt — directly reducing per-case handling time against CMS turnaround clocks.
+  multi-minute hunt - directly reducing per-case handling time against CMS turnaround clocks.
 - **Less overturn-driven rework.** The overturn analysis (evidence §3) shows the two
-  highest-volume denial reasons overturned ~24–25% of the time. Targeting those reasons cuts
+  highest-volume denial reasons overturned ~24-25% of the time. Targeting those reasons cuts
   denials the plan would have paid to reverse anyway.
 - **Improper-payment protection.** The cross-domain query (evidence §4) surfaces providers
-  who pair a high denial rate with a fraud indicator — a prioritized payment-integrity work
+  who pair a high denial rate with a fraud indicator - a prioritized payment-integrity work
   queue out of the box.
 - **Quantified exposure.** ~$18.3M billed on the book, with **$3.14M concentrated in denied
   claims** feeding appeals/rework (evidence §5). The solution acts directly on that pool.

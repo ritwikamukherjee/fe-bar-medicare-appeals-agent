@@ -1,4 +1,4 @@
-# Layer 2 — Unity Catalog governance
+# Layer 2 - Unity Catalog governance
 
 Governs the tables that Lakeflow lands (`01_lakeflow_ingest/`) and feeds every downstream
 layer. This is the **semantic ontology**: relationships + certified metrics + business
@@ -48,5 +48,5 @@ in [`state_eligibility_corroboration.sql`](state_eligibility_corroboration.sql).
 ## Connects to
 - **Up:** consumes the tables from `01_lakeflow_ingest/`.
 - **Down:** the Genie agent (`05_genie_agent/`), the Gen AI supervisor (`04_genai_agent/`),
-  and the app dashboard (`06_databricks_app/`) all read these certified metrics — the shared
+  and the app dashboard (`06_databricks_app/`) all read these certified metrics - the shared
   governed layer that keeps every answer consistent.

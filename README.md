@@ -1,10 +1,10 @@
-# Medicare Appeals Triage Agent — an end-to-end payer-integrity build
+# Medicare Appeals Triage Agent - an end-to-end payer-integrity build
 
 **Industry:** Healthcare payer (Medicare Advantage / Medicaid managed care)
 **Customer problem:** A health plan's claims-operations team is buried in denied-claim
-appeals and grievances. Case workers hop between systems to answer one question — *is this
+appeals and grievances. Case workers hop between systems to answer one question - *is this
 member eligible, why was the claim denied, has this provider been flagged, what does the
-evidence say?* — while the plan pays twice for denials that get overturned on appeal.
+evidence say?* - while the plan pays twice for denials that get overturned on appeal.
 
 ## The business outcome (read this first)
 
@@ -14,20 +14,20 @@ used here (executed live, see [`evidence/RUN_EVIDENCE.md`](evidence/RUN_EVIDENCE
 
 - **$3.14M** sits in **5,284 denied claims** that feed the appeals/rework pipeline (out of
   ~$18.3M billed). Appeals handling and avoidable denials act directly on that number.
-- The two highest-volume denial reasons — *Prior authorization not obtained* (323 appeals)
-  and *Not medically necessary* (287 appeals) — are **overturned ~24–25%** of the time.
+- The two highest-volume denial reasons - *Prior authorization not obtained* (323 appeals)
+  and *Not medically necessary* (287 appeals) - are **overturned ~24-25%** of the time.
   One in four of those denials is reversed later: rework the plan pays for twice.
 - A single cross-domain query surfaces **providers who combine a high denial rate with a
-  fraud indicator** (e.g. Endocrinology + "GLP-1 phantom claim") — the exact population a
+  fraud indicator** (e.g. Endocrinology + "GLP-1 phantom claim") - the exact population a
   payment-integrity team should review first.
 
 **Value framing.** For a plan handling tens of thousands of appeals a year, compressing
 per-case triage from minutes to seconds and steering reviewers to the highest-yield denial
 reasons and providers is a direct hit on administrative cost, overturn-driven rework, and
-improper-payment leakage — while improving the member and provider experience (regulated
+improper-payment leakage - while improving the member and provider experience (regulated
 CMS turnaround clocks).
 
-## The data journey — one connected pipeline, six Databricks layers
+## The data journey - one connected pipeline, six Databricks layers
 
 ```
  raw synthetic payer data
@@ -80,13 +80,13 @@ That shared, governed schema is the join between the layers.
 | [`04_genai_agent/`](04_genai_agent/) | Gen AI | Code-based Multi-Agent Supervisor (Genie + UC functions + MCP) |
 | [`05_genie_agent/`](05_genie_agent/) | Genie | Genie space config: general instructions, synonyms, trusted SQL |
 | [`06_databricks_app/`](06_databricks_app/) | App | React + FastAPI Databricks App (dashboard + chat) |
-| [`evidence/`](evidence/) | — | **Real run output committed as text** (query results, constraints, Genie trace) |
-| [`deck/`](deck/) | — | Business presentation (outcome-led) |
-| [`docs/`](docs/) | — | Architecture, ontology runbook, decisions & trade-offs |
+| [`evidence/`](evidence/) | - | **Real run output committed as text** (query results, constraints, Genie trace) |
+| [`deck/`](deck/) | - | Business presentation (outcome-led) |
+| [`docs/`](docs/) | - | Architecture, ontology runbook, decisions & trade-offs |
 
 ## Proof it runs
 
-See [`evidence/RUN_EVIDENCE.md`](evidence/RUN_EVIDENCE.md) — live output captured
+See [`evidence/RUN_EVIDENCE.md`](evidence/RUN_EVIDENCE.md) - live output captured
 2026-09-22 against `fe-vm-hls-amer`: table row counts, the 6+14 constraint listing, the
 certified-metric overturn-rate result, the cross-domain provider-fraud join, dollar
 exposure, and a live Genie NL→SQL→answer trace.

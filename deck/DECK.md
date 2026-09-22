@@ -5,21 +5,21 @@ audience: Executive sponsor (VP Claims Ops) + Technical owner (Data/Platform lea
 ---
 
 # Medicare Appeals Triage Agent
-### One governed answer per appeal — in seconds, not minutes
+### One governed answer per appeal - in seconds, not minutes
 
 A payer-integrity build on Databricks for a Medicare Advantage / Medicaid health plan.
 *(Synthetic data; real public code taxonomies.)*
 
 ---
 
-## Slide 1 — The business problem
+## Slide 1 - The business problem
 
 **Denied-claim appeals are expensive, slow, and repetitive.**
 
 - Case workers hop across systems to triage one appeal: eligibility, denial reason,
   provider history, clinical evidence.
 - Regulated **CMS turnaround clocks** are ticking the whole time.
-- A large share of denials are **overturned on appeal** — the plan adjudicates and pays
+- A large share of denials are **overturned on appeal** - the plan adjudicates and pays
   for the same claim twice.
 
 > For the VP of Claims Ops: this is administrative cost + rework + compliance risk.
@@ -27,7 +27,7 @@ A payer-integrity build on Databricks for a Medicare Advantage / Medicaid health
 
 ---
 
-## Slide 2 — The stakes, quantified
+## Slide 2 - The stakes, quantified
 
 On the book of business analyzed (executed live):
 
@@ -35,7 +35,7 @@ On the book of business analyzed (executed live):
 |---|---|
 | Total billed | **~$18.3M** |
 | **Denied claims feeding appeals/rework** | **$3.14M** (5,284 claims) |
-| Overturn rate on top-2 denial reasons | **~24–25%** (Prior-auth-not-obtained: 323 appeals; Not-medically-necessary: 287) |
+| Overturn rate on top-2 denial reasons | **~24-25%** (Prior-auth-not-obtained: 323 appeals; Not-medically-necessary: 287) |
 | Pending claims exposure | $1.78M |
 
 **One in four** denials on the highest-volume reasons is reversed later. That is the
@@ -43,7 +43,7 @@ rework we go after.
 
 ---
 
-## Slide 3 — The solution: one connected data journey
+## Slide 3 - The solution: one connected data journey
 
 ```
 raw synthetic payer data
@@ -55,11 +55,11 @@ raw synthetic payer data
 ```
 
 **Every layer reads the same governed schema.** The dashboard, the Genie agent, and the
-supervisor all speak one set of certified definitions — no drift, fully traceable.
+supervisor all speak one set of certified definitions - no drift, fully traceable.
 
 ---
 
-## Slide 4 — What a case worker actually gets
+## Slide 4 - What a case worker actually gets
 
 - **Ask in plain English:** "overturn rate by denial reason?" → governed answer with the
   certified metric, in seconds (live Genie trace in the repo).
@@ -72,22 +72,22 @@ supervisor all speak one set of certified definitions — no drift, fully tracea
 
 ---
 
-## Slide 5 — Proof it runs (not a mockup)
+## Slide 5 - Proof it runs (not a mockup)
 
 Committed as text in the repo's `evidence/`:
 
 - Governed tables populated: **33,500 claims / 2,305 appeals / 5,300 members**.
-- **6 PK + 14 FK** constraints live (RELY) — the join graph the agent trusts.
+- **6 PK + 14 FK** constraints live (RELY) - the join graph the agent trusts.
 - Certified-metric overturn rates by denial reason.
 - Cross-domain provider-denial × fraud join.
 - A **live Genie NL → `MEASURE()` SQL → grounded answer** trace.
 
 ---
 
-## Slide 6 — Business outcomes
+## Slide 6 - Business outcomes
 
 - **Triage time:** minutes → seconds per appeal, against CMS clocks.
-- **Rework reduction:** target the ~24–25% overturn reasons to stop paying twice.
+- **Rework reduction:** target the ~24-25% overturn reasons to stop paying twice.
 - **Improper-payment protection:** a ready-made, prioritized payment-integrity work queue.
 - **Scales the team, not headcount:** analysts self-serve governed answers; reviewers start
   with the highest-yield work.
@@ -96,7 +96,7 @@ Committed as text in the repo's `evidence/`:
 
 ---
 
-## Slide 7 — For the technical stakeholder
+## Slide 7 - For the technical stakeholder
 
 - **Governance-first:** certified metric views + declared RELY keys → reproducible,
   optimizer- and Genie-trusted joins. No ad-hoc KPI drift.
@@ -108,7 +108,7 @@ Committed as text in the repo's `evidence/`:
 
 ---
 
-## Slide 8 — Roadmap
+## Slide 8 - Roadmap
 
 - **Overturn-likelihood model** (MLflow + Model Serving): score each open appeal, surface it
   in the dashboard, feed reviewer prioritization. The certified feature layer already exists.
@@ -117,7 +117,7 @@ Committed as text in the repo's `evidence/`:
 
 ---
 
-## Slide 9 — The ask
+## Slide 9 - The ask
 
 Green-light a scoped pilot on one line of business:
 
@@ -125,4 +125,4 @@ Green-light a scoped pilot on one line of business:
 2. Stand up the app for a triage pod.
 3. Measure triage time and overturn-rework reduction over one quarter.
 
-**Low incremental cost — it reuses the governed lakehouse you already own.**
+**Low incremental cost - it reuses the governed lakehouse you already own.**

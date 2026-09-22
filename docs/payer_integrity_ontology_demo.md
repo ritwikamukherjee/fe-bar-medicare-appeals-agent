@@ -1,15 +1,15 @@
-# Payer Integrity Ontology — Genie One Demo
+# Payer Integrity Ontology - Genie One Demo
 
 **Workspace:** `fe-vm-hls-amer.cloud.databricks.com`
 **Catalog / schema:** `hls_amer_catalog.appeals-review`
-**Genie space:** [Payer Integrity Ontology — Genie One](https://fe-vm-hls-amer.cloud.databricks.com/genie/rooms/01f1975b29131726afea626d5ebabac3) (`space_id 01f1975b29131726afea626d5ebabac3`)
+**Genie space:** [Payer Integrity Ontology - Genie One](https://fe-vm-hls-amer.cloud.databricks.com/genie/rooms/01f1975b29131726afea626d5ebabac3) (`space_id 01f1975b29131726afea626d5ebabac3`)
 **Built:** 2026-08-13
 
 ---
 
 ## The story you're telling
 
-> "We didn't just point Genie at some tables. We built a **semantic ontology** over the payer domain — entities, relationships, certified business metrics, synonyms, and business domains — and now a business user can ask a plain-English question and Genie reasons over that knowledge graph: it picks the certified metric, follows the right relationships between claims, providers, appeals, and members, and returns a grounded, traceable answer."
+> "We didn't just point Genie at some tables. We built a **semantic ontology** over the payer domain - entities, relationships, certified business metrics, synonyms, and business domains - and now a business user can ask a plain-English question and Genie reasons over that knowledge graph: it picks the certified metric, follows the right relationships between claims, providers, appeals, and members, and returns a grounded, traceable answer."
 
 An "ontology" here = three stacked layers on top of the raw star schema:
 
@@ -17,11 +17,11 @@ An "ontology" here = three stacked layers on top of the raw star schema:
 |---|---|---|
 | **1. Business semantics** (UC, GA) | Entities + declared PK/FK relationships + certified metric views + synonyms | 6 PKs, 14 RELY foreign keys, 8 certified metric views, 24 enriched column comments w/ synonyms |
 | **2. Genie Ontology** (Preview) | Auto-built knowledge graph that grounds Genie answers by ranking authoritative "snippets" | Genie consumes the semantics + metric views + comments automatically |
-| **3. Domains** (Preview) | Governed-tag business areas for Discover / Genie One browsing | 6 payer domains tagged onto 19 assets (via `payer_domain` tag — see "Governed Domains" note) |
+| **3. Domains** (Preview) | Governed-tag business areas for Discover / Genie One browsing | 6 payer domains tagged onto 19 assets (via `payer_domain` tag - see "Governed Domains" note) |
 
 ---
 
-## The entity–relationship graph (what Genie now navigates)
+## The entity-relationship graph (what Genie now navigates)
 
 ```
 members ──< eligibility
@@ -50,7 +50,7 @@ All 14 foreign keys are declared `RELY` (zero orphan rows verified), so Genie an
 
 ---
 
-## Demo runbook — questions to ask, and the "ontology moment" each shows
+## Demo runbook - questions to ask, and the "ontology moment" each shows
 
 Ask these in the Genie space in order. Each is chosen to make a specific ontology capability visible.
 
@@ -63,7 +63,7 @@ Ask these in the Genie space in order. Each is chosen to make a specific ontolog
 
 ### Relationship traversal (the star of the show)
 3. **"Which providers have the highest denial rates and also appear in the fraud reference? Show specialty and fraud type."**
-   → *Cross-domain.* Genie joins `provider_risk_metrics` (Denial Rate) to `claims → fraud_reference` via the declared FK graph. **This is the money demo** — it works today (validated).
+   → *Cross-domain.* Genie joins `provider_risk_metrics` (Denial Rate) to `claims → fraud_reference` via the declared FK graph. **This is the money demo** - it works today (validated).
 
 4. **"Show members who had claims processed while their coverage was inactive."**
    → Uses the `was_member_active` flag / `eligibility` relationship. Payment-integrity narrative.
@@ -87,14 +87,14 @@ Ask these in the Genie space in order. Each is chosen to make a specific ontolog
 
 ### Appeals operations
 10. **"How many appeals were filed by providers versus members, and what is each group's overturn rate?"**
-    → `appeals_metrics` by `Appeal Source` — shows the synonym mapping (appellant / filed by).
+    → `appeals_metrics` by `Appeal Source` - shows the synonym mapping (appellant / filed by).
 
 11. **"What share of appeals had supporting documentation, and are documented appeals overturned more often?"**
     → `has_documentation` grounded by comment.
 
 ### Member / eligibility
 12. **"How many active members do we have by plan type (line of business) and state?"**
-    → `eligibility_coverage_metrics`. Say "LOB" or "line of business" out loud — the synonym resolves to `plan_type`.
+    → `eligibility_coverage_metrics`. Say "LOB" or "line of business" out loud - the synonym resolves to `plan_type`.
 
 13. **"How many open Provider Claim Inquiry (PCI) cases do we have by line of business?"**
     → `salesforce_cases` grounded by the `case_type` comment (PCI = Provider Claim Inquiry).
@@ -105,7 +105,7 @@ Ask these in the Genie space in order. Each is chosen to make a specific ontolog
 
 ---
 
-## One-time UI setup (API can't set these — paste in the Genie space)
+## One-time UI setup (API can't set these - paste in the Genie space)
 
 The public Genie API creates the space, tables, and sample questions (done). **General Instructions** and **trusted example SQL** are UI-only today. Open the space → **Settings / Instructions** and paste the block below.
 
@@ -145,7 +145,7 @@ When a question spans domains (e.g., provider risk + fraud, appeals + original d
 join through the declared keys rather than guessing.
 ```
 
-### Trusted example SQL (add 2–3 in the "SQL examples" / "Instructions" section)
+### Trusted example SQL (add 2-3 in the "SQL examples" / "Instructions" section)
 
 **Q: Providers with highest denial rates that also appear in the fraud reference**
 ```sql
@@ -189,7 +189,7 @@ ORDER BY c.paid_amount DESC;
    `claims_operations, appeals_grievances, prior_auth_um, pharmacy_glp1, provider_integrity, member_eligibility`.
    (Tag-policy update API: `PATCH /api/2.1/tag-policies`, or Terraform `databricks_tag_policy`.)
 
-2. **Business Glossary Pages** (preview "coming soon") — when enabled, publish the definitions
+2. **Business Glossary Pages** (preview "coming soon") - when enabled, publish the definitions
    above as glossary Pages linked to each metric view so Genie cites canonical term definitions.
 
 3. **Materialize the heavy metric views** (`provider_risk_metrics`, `glp1_utilization_metrics`)
@@ -206,5 +206,5 @@ ORDER BY c.paid_amount DESC;
 - **New metric views:** `fraud_exposure_metrics`, `eligibility_coverage_metrics`.
 - **Column comments:** 24 business columns enriched with definitions + synonyms.
 - **Tags:** `payer_domain` on 19 assets, `subject_area='Payer Integrity'`, `certified='true'` on 8 metric views.
-- **Genie space:** `Payer Integrity Ontology — Genie One` (`01f1975b29131726afea626d5ebabac3`).
+- **Genie space:** `Payer Integrity Ontology - Genie One` (`01f1975b29131726afea626d5ebabac3`).
 - **Local config:** refreshed the stale `DEFAULT` profile token in `~/.databrickscfg` (it already pointed at this host) so the Databricks MCP tools could authenticate.

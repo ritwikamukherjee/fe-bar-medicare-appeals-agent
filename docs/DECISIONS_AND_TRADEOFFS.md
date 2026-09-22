@@ -6,7 +6,7 @@ this explicitly ("Why this approach and not another?").
 ## 1. Certified metric views vs. prompting the agent over raw tables
 **Chose:** define 8 governed metric views (overturn rate, denial dollars, provider risk,
 fraud exposure, GLP-1 utilization, eligibility coverage) with `MEASURE()` semantics.
-**Why:** an agent that computes KPIs ad-hoc will drift — one question gets `AVG(is_overturned)`,
+**Why:** an agent that computes KPIs ad-hoc will drift - one question gets `AVG(is_overturned)`,
 the next gets something subtly different. Certified metrics give one governed definition that
 Genie and the dashboard both use. Evidence §6 shows Genie choosing `MEASURE(Overturn Rate)`
 on its own. **Trade-off:** more up-front modeling; worth it for trust and reproducibility.
@@ -21,8 +21,8 @@ RELY honestly; enforced at generation time.
 ## 3. Multi-Agent Supervisor vs. a single RAG chain
 **Chose:** a supervisor that routes to Genie (aggregates/trends), Unity Catalog SQL functions
 (per-member / per-claim briefs), and a ClinicalTrials.gov MCP (medical-necessity evidence).
-**Why:** appeals triage spans two very different question shapes — population analytics and
-single-record dossiers — plus external clinical evidence. One retrieval chain can't serve all
+**Why:** appeals triage spans two very different question shapes - population analytics and
+single-record dossiers - plus external clinical evidence. One retrieval chain can't serve all
 three well. **Trade-off:** orchestration complexity and per-request tool registration.
 
 ## 4. Agent Bricks MAS vs. a code-based supervisor
@@ -49,4 +49,4 @@ ICD-10) are structured. Analytics stays on the lakehouse; operational lookup goe
 classifier. **Why:** the customer value here is governed natural-language triage and
 routing, which Gen AI serves directly. An overturn-likelihood model is a strong *next* step
 (scores in the dashboard, feeds reviewer prioritization) and the certified feature layer to
-train it already exists — noted as future work rather than scope creep for this build.
+train it already exists - noted as future work rather than scope creep for this build.

@@ -1,7 +1,7 @@
-# Execution Evidence — real run output (readable as text)
+# Execution Evidence - real run output (readable as text)
 
 > The FE Bar Build domain requires **evidence the build actually ran, committed as
-> text** (query results, run logs, agent output) — not screenshots. Everything below
+> text** (query results, run logs, agent output) - not screenshots. Everything below
 > was executed live against the governed schema and captured verbatim.
 
 - **Workspace:** `fe-vm-hls-amer.cloud.databricks.com` (AWS)
@@ -11,7 +11,7 @@
 
 ---
 
-## 1. Lakeflow output — governed tables are populated
+## 1. Lakeflow output - governed tables are populated
 
 ```sql
 SELECT 'claims' AS tbl, COUNT(*) AS rows FROM hls_amer_catalog.`appeals-review`.claims
@@ -36,7 +36,7 @@ ORDER BY tbl;
 
 ---
 
-## 2. Unity Catalog governance — declared PK/FK constraints (RELY) are live
+## 2. Unity Catalog governance - declared PK/FK constraints (RELY) are live
 
 ```sql
 SELECT tc.table_name, tc.constraint_type, tc.constraint_name
@@ -67,7 +67,7 @@ trust them for join inference. This is the backbone of the semantic ontology.
 
 ---
 
-## 3. Certified metric view — appeal overturn rate by original denial reason
+## 3. Certified metric view - appeal overturn rate by original denial reason
 
 ```sql
 SELECT `Original Denial Reason`,
@@ -94,14 +94,14 @@ Top rows (of 21):
 | Coding error | 98 | 0.204 |
 | Provider not in network | 44 | 0.136 |
 
-**Business read:** the two highest-volume denial reasons — *Prior authorization not
-obtained* (323 appeals) and *Not medically necessary* (287 appeals) — are overturned
-~24–25% of the time. Roughly one in four denials on those grounds is reversed on appeal,
+**Business read:** the two highest-volume denial reasons - *Prior authorization not
+obtained* (323 appeals) and *Not medically necessary* (287 appeals) - are overturned
+~24-25% of the time. Roughly one in four denials on those grounds is reversed on appeal,
 which is rework the plan is paying for twice.
 
 ---
 
-## 4. Cross-domain query — high-denial providers that also appear in the fraud reference
+## 4. Cross-domain query - high-denial providers that also appear in the fraud reference
 
 This is the "ontology moment": Genie/SQL joins the certified `provider_risk_metrics`
 (Denial Rate) to `claims → fraud_reference` through the declared FK graph.
@@ -136,13 +136,13 @@ Top rows:
 | Dr. Dalton Bradshaw | Primary Care | 0.271 | Diagnosis upcoding for coverage |
 
 **Business read:** these providers combine an elevated denial rate with one or more
-fraud indicators — the exact population a payment-integrity team should route to review
+fraud indicators - the exact population a payment-integrity team should route to review
 first. Endocrinology + "GLP-1 phantom claim" / "compounded semaglutide billing" reflects
 the current GLP-1 utilization pressure.
 
 ---
 
-## 5. Dollar exposure by claim status — quantified value anchor
+## 5. Dollar exposure by claim status - quantified value anchor
 
 ```sql
 SELECT status, COUNT(*) AS claims,
@@ -165,15 +165,15 @@ preventing avoidable denials acts directly on that $3.14M.
 
 ---
 
-## 6. Genie agent — live natural-language → certified SQL → grounded answer
+## 6. Genie agent - live natural-language → certified SQL → grounded answer
 
-Genie space: **Payer Integrity Ontology — Genie One** (`01f1975b29131726afea626d5ebabac3`).
+Genie space: **Payer Integrity Ontology - Genie One** (`01f1975b29131726afea626d5ebabac3`).
 Question asked via the Genie Conversation API:
 
 > *"What is our appeal overturn rate by original denial reason, and which reasons are we
 > losing most often?"*
 
-**SQL Genie generated (unedited)** — note it selected the governed metric view and
+**SQL Genie generated (unedited)** - note it selected the governed metric view and
 `MEASURE()`, not an ad-hoc `AVG()`:
 
 ```sql
@@ -195,7 +195,7 @@ ORDER BY `lost_count` DESC, `appeal_count` DESC, `Original Denial Reason` ASC;
 > rate, followed by **Not medically necessary** with **215** losses and a **25.1%**
 > overturn rate, and **Service not covered under plan** with **193** losses and a **27.2%**
 > overturn rate. ... Among these high-loss reasons, overturn rates are mostly in the
-> **18%–27%** range, while the lowest overturn rate overall is **Provider not in network**
+> **18%-27%** range, while the lowest overturn rate overall is **Provider not in network**
 > at **13.6%**.
 
 `status: COMPLETED`, `row_count: 21`, `conversation_id: 01f1b6deb80d1d45b5872802e551fec8`.
@@ -210,10 +210,10 @@ traceable answer.
 
 1. **Lakeflow** generates + ingests the synthetic payer data into the tables counted in §1.
 2. **Unity Catalog** governs those exact tables with the PK/FK graph in §2 and the certified
-   metric views queried in §3–§4.
+   metric views queried in §3-§4.
 3. **Lakebase** serves the case narratives operationally for sub-second member-services
    search (see `03_lakebase_serving/` evidence).
 4. **Gen AI (MAS)** and the **Genie agent** in §6 answer over the *same* governed metrics.
 5. The **Databricks App** calls the same SQL (dashboard) and proxies chat to the agent.
 
-Every layer reads or writes the one governed schema — that shared schema is the join.
+Every layer reads or writes the one governed schema - that shared schema is the join.

@@ -1,4 +1,4 @@
-# Layer 4 — Gen AI: Multi-Agent Supervisor
+# Layer 4 - Gen AI: Multi-Agent Supervisor
 
 Makes the data intelligent. A supervisor agent routes each question to the right tool and
 synthesizes one answer. This directory holds the **code-based** supervisor (the resilient
@@ -13,10 +13,10 @@ variant); the production app can point at either this or the managed Agent Brick
 | `conn_clinicaltrials` | External MCP | ClinicalTrials.gov evidence for medical-necessity appeals |
 
 ## Contents
-- [`agent.py`](agent.py) — code-based ResponsesAgent supervisor. Wraps each MCP
+- [`agent.py`](agent.py) - code-based ResponsesAgent supervisor. Wraps each MCP
   `list_tools()` in try/except so a flaky external server degrades gracefully instead of
   failing the whole request.
-- [`deploy.py`](deploy.py) — deploy to a Model Serving endpoint.
+- [`deploy.py`](deploy.py) - deploy to a Model Serving endpoint.
 
 ## Design decision
 Managed Agent Bricks MAS vs. this code-based supervisor: see

@@ -1,12 +1,12 @@
 # Follow-up / Deferred Work
 
 Status as of 2026-07-13. The app is **live and working** (see `APP_OVERVIEW.md`). These
-items were intentionally deferred — nothing here is blocking.
+items were intentionally deferred - nothing here is blocking.
 
 ## 1. Restore the remaining external MCP tools (Part D + PubMed)
 
 **Currently out of the supervisor:** `raven_medicare_mcp` (Medicare Part D) and
-`conn_aichemy_pubmed` (PubMed). Both UC connection objects are still intact — no rebuild
+`conn_aichemy_pubmed` (PubMed). Both UC connection objects are still intact - no rebuild
 needed, just re-wiring.
 
 **Why they're out:** the Agent Bricks MAS registers all tools per request and fails the
@@ -22,10 +22,10 @@ unreliable:
 
 **Durable fix (the real to-do):** switch the app from the Agent Bricks MAS to the
 **code-based supervisor** already in `supervisor/agent.py`. It wraps each MCP
-`list_tools()` in try/except, so a flaky server is *skipped*, not fatal — Part D/PubMed
+`list_tools()` in try/except, so a flaky server is *skipped*, not fatal - Part D/PubMed
 would degrade gracefully instead of taking the whole endpoint down.
 - Add the two UC-function tools (`member_appeal_brief`, `claim_investigation_summary`) to
-  that agent — it currently only has Genie + the 3 MCPs.
+  that agent - it currently only has Genie + the 3 MCPs.
 - Deploy via `supervisor/deploy.py`, then point `MAS_ENDPOINT_NAME` in `app.yaml` at the
   new endpoint and redeploy the app.
 
