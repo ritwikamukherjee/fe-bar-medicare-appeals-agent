@@ -1,0 +1,6 @@
+mlflow>=2.18.0
+databricks-agents>=0.18.0
+databricks-mcp>=0.2.0
+databricks-sdk>=0.36.0
+openai>=1.55.0
+pydantic>=2.7.0
