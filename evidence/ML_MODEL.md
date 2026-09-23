@@ -43,8 +43,21 @@ consistent with the certified `appeals_metrics` overturn analysis in `RUN_EVIDEN
 certified overturn-rate reasons, so the prioritization surfaces the right cases even at
 chance-level binary AUC.)
 
-## Served
+## Served (live, verified)
 Model Serving endpoint **`appeal-overturn-model`** created from the champion version
-(scale-to-zero). Config in `../07_ml_overturn_model/serving_endpoint.json`. Query shape:
-one row per appeal with `appeal_type`, `appeal_source`, `original_denial_reason` -> returns
-overturn probability.
+(scale-to-zero). State: **READY** (`DEPLOYMENT_READY`). Config in
+`../07_ml_overturn_model/serving_endpoint.json`.
+
+Live query (2026-09-22):
+```json
+// request
+[{"appeal_type":"Claim Denial","appeal_source":"Provider","original_denial_reason":"Formulary exclusion","has_documentation":1},
+ {"appeal_type":"Claim Denial","appeal_source":"Member","original_denial_reason":"Provider not in network","has_documentation":0}]
+// response
+{"predictions":[0,0]}
+```
+The endpoint returns the hard class (0 = not overturned). Both are 0 because no denial-reason
+category has an overturn rate above 50%, so the binary label is almost always 0; the useful
+signal for the reviewer queue is the continuous `overturn_probability` in the scored table
+(`hls_amer_catalog.appeals_ml.appeal_overturn_scores`), which ranks Formulary exclusion /
+Experimental / Service-not-covered highest, matching the certified overturn-rate analysis.
