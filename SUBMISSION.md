@@ -39,7 +39,9 @@ schema (`hls_amer_catalog.`​`` `appeals-review` ``):
    This semantic ontology is what makes natural-language answers trustworthy (evidence §2-§4).
 3. **Lakebase** (managed Postgres + pgvector) serves the free-text **case narratives** for
    sub-second **hybrid search** (vector + BM25 with reciprocal-rank fusion) so a member-services
-   rep instantly finds similar prior cases when a member calls.
+   rep instantly finds similar prior cases when a member calls. Deployed live in
+   `fe-vm-hls-amer` (Lakebase project `healthplan-appeals`, 800 cases + embeddings); vector,
+   BM25, and hybrid all validated (evidence: `LAKEBASE_DEPLOYMENT.md`).
 4. **Gen AI - a Multi-Agent Supervisor** routes each question to the right tool (a Genie
    space for aggregate/trend questions, Unity Catalog SQL functions for per-member and
    per-claim briefs, and a ClinicalTrials.gov MCP for medical-necessity evidence) and

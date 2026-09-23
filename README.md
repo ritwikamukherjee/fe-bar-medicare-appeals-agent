@@ -76,7 +76,7 @@ That shared, governed schema is the join between the layers.
 |---|---|---|
 | [`01_lakeflow_ingest/`](01_lakeflow_ingest/) | Lakeflow | Synthetic data generator + table-creation pipeline |
 | [`02_unity_catalog_governance/`](02_unity_catalog_governance/) | Unity Catalog | Constraints, certified metric views, comments/synonyms, tags |
-| [`03_lakebase_serving/`](03_lakebase_serving/) | Lakebase | Managed Postgres + pgvector hybrid search over case narratives, own app |
+| [`03_lakebase_serving/`](03_lakebase_serving/) | Lakebase | Managed Postgres + pgvector/BM25 hybrid search over case narratives, own app. Deployed live in `fe-vm-hls-amer` (project `healthplan-appeals`); see [`DEPLOY_FE_VM.md`](03_lakebase_serving/DEPLOY_FE_VM.md) |
 | [`04_genai_agent/`](04_genai_agent/) | Gen AI | Code-based Multi-Agent Supervisor (Genie + UC functions + MCP) |
 | [`05_genie_agent/`](05_genie_agent/) | Genie | Genie space config: general instructions, synonyms, trusted SQL |
 | [`06_databricks_app/`](06_databricks_app/) | App | React + FastAPI Databricks App (dashboard + chat) |
@@ -86,10 +86,13 @@ That shared, governed schema is the join between the layers.
 
 ## Proof it runs
 
-See [`evidence/RUN_EVIDENCE.md`](evidence/RUN_EVIDENCE.md) - live output captured
-2026-09-22 against `fe-vm-hls-amer`: table row counts, the 6+14 constraint listing, the
-certified-metric overturn-rate result, the cross-domain provider-fraud join, dollar
-exposure, and a live Genie NL→SQL→answer trace.
+Live output captured 2026-09-22 against `fe-vm-hls-amer`:
+- [`evidence/RUN_EVIDENCE.md`](evidence/RUN_EVIDENCE.md) - table row counts, the 6+14
+  constraint listing, the certified-metric overturn-rate result, the cross-domain
+  provider-fraud join, dollar exposure, and a live Genie NL to SQL to answer trace.
+- [`evidence/LAKEBASE_DEPLOYMENT.md`](evidence/LAKEBASE_DEPLOYMENT.md) - the Lakebase layer
+  provisioned and seeded in `fe-vm-hls-amer` (800 cases + embeddings), with vector, BM25,
+  and hybrid search all validated OK.
 
 ## Data & compliance
 
