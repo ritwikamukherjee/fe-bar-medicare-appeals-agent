@@ -1,0 +1,14 @@
+{
+  "name": "appeal-overturn-model",
+  "config": {
+    "served_entities": [
+      {
+        "name": "champion",
+        "entity_name": "hls_amer_catalog.appeals_ml.appeal_overturn_model",
+        "entity_version": "3",
+        "workload_size": "Small",
+        "scale_to_zero_enabled": true
+      }
+    ]
+  }
+}

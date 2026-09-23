@@ -86,7 +86,8 @@ That shared, governed schema is the join between the layers.
 | [`04_genai_agent/`](04_genai_agent/) | Gen AI | Code-based Multi-Agent Supervisor (Genie + UC functions + MCP) |
 | [`05_genie_agent/`](05_genie_agent/) | Genie | Genie space config: general instructions, synonyms, trusted SQL |
 | [`06_databricks_app/`](06_databricks_app/) | App | React + FastAPI Databricks App (dashboard + chat) |
-| [`evidence/`](evidence/) | - | **Real run output committed as text** (query results, constraints, Genie trace) |
+| [`07_ml_overturn_model/`](07_ml_overturn_model/) | ML | Trained + served overturn-likelihood model (MLflow -> Unity Catalog -> Model Serving) feeding a reviewer-prioritization score |
+| [`evidence/`](evidence/) | - | **Real run output committed as text** (query results, constraints, Genie trace, Lakebase search, ML metrics) |
 | [`deck/`](deck/) | - | Business presentation (outcome-led) |
 | [`docs/`](docs/) | - | Architecture, ontology runbook, decisions & trade-offs |
 
@@ -99,6 +100,9 @@ Live output captured 2026-09-22 against `fe-vm-hls-amer`:
 - [`evidence/LAKEBASE_DEPLOYMENT.md`](evidence/LAKEBASE_DEPLOYMENT.md) - the Lakebase layer
   provisioned and seeded in `fe-vm-hls-amer` (800 cases + embeddings), with vector, BM25,
   and hybrid search all validated OK.
+- [`evidence/ML_MODEL.md`](evidence/ML_MODEL.md) - the overturn-likelihood model trained with
+  MLflow, registered in Unity Catalog, scored across all appeals, and served on Model Serving
+  (AUC reported honestly; the value is the end-to-end MLOps pattern and the prioritization).
 
 ## Data & compliance
 

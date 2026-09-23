@@ -61,10 +61,17 @@ schema (`hls_amer_catalog.`​`` `appeals-review` ``):
    shows the live NL→SQL→answer trace using `MEASURE()` over the metric view).
 6. **A Databricks App** (React + FastAPI) surfaces it: an operations dashboard driven by the
    same governed SQL, plus a chat panel that proxies to the agent.
+7. **A trained + served ML model** pairs the grounded Gen AI answers with a risk score: an
+   overturn-likelihood classifier trained with **MLflow**, registered in **Unity Catalog**
+   (`hls_amer_catalog.appeals_ml.appeal_overturn_model`, alias champion), scored across all
+   appeals into a reviewer-prioritization table, and **served** on Model Serving. On synthetic
+   data the AUC is near chance by design (overturn is a random draw weighted by denial-reason
+   rate), reported honestly; the value is the end-to-end MLOps pattern and a prioritization
+   that surfaces the right high-overturn reasons (evidence: `ML_MODEL.md`).
 
 The layers are connected, not siloed: every layer reads or writes the **same governed
-schema**, so the dashboard, the Genie agent, and the supervisor all speak the same certified
-definitions.
+schema**, so the dashboard, the Genie agent, the supervisor, and the model all speak the same
+certified definitions.
 
 ## What AI tools did you use, and what was your workflow? What decisions and trade-offs did you have to make?
 **Tools.** I built with **Claude Code** (Isaac) driving the Databricks MCP server + CLI:
