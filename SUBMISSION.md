@@ -76,10 +76,12 @@ certified definitions.
 ## What AI tools did you use, and what was your workflow? What decisions and trade-offs did you have to make?
 **Tools.** I built with **Claude Code** (Isaac) driving the Databricks MCP server + CLI:
 scaffolding the app, generating synthetic data, authoring the Unity Catalog constraints and
-metric views, configuring the Genie space, and capturing execution evidence by running SQL,
-the Genie Conversation API, and the app's endpoints live. On-platform AI: Databricks
-Foundation Model serving, Agent Bricks Multi-Agent Supervisor, Genie, and MLflow (tracing /
-LLM-as-judge scaffolding) for the agent.
+metric views, configuring the Genie space, provisioning and seeding Lakebase, training the
+overturn-likelihood model (MLflow -> Unity Catalog registration -> Model Serving) via
+serverless jobs, and capturing execution evidence by running SQL, the Genie Conversation API,
+and the app's endpoints live. On-platform AI: Databricks Foundation Model serving (embeddings +
+LLM), Agent Bricks Multi-Agent Supervisor, Genie, MLflow (training, tracking, LLM-as-judge
+scaffolding), and Model Serving.
 
 **Key decisions & trade-offs (full detail in [`docs/DECISIONS_AND_TRADEOFFS.md`](docs/DECISIONS_AND_TRADEOFFS.md)):**
 - **Certified metric views over raw-table prompting.** More up-front modeling work, but it
