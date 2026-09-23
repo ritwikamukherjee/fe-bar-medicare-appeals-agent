@@ -1,10 +1,15 @@
 # Medicare Appeals Triage Agent - an end-to-end payer-integrity build
 
 **Industry:** Healthcare payer (Medicare Advantage / Medicaid managed care)
-**Customer problem:** A health plan's claims-operations team is buried in denied-claim
-appeals and grievances. Case workers hop between systems to answer one question - *is this
-member eligible, why was the claim denied, has this provider been flagged, what does the
-evidence say?* - while the plan pays twice for denials that get overturned on appeal.
+**Metric owner (the buyer):** the **VP of Claims Operations**, whose scorecard is the
+appeal-overturn rate, appeal cycle time against CMS clocks, and administrative cost per claim.
+The denied-dollar exposure rolls up to the **CFO's medical loss ratio (MLR)**, and the
+"not medically necessary" overturns sit on the **Chief Medical Officer's** clinical-policy scorecard.
+**Customer problem:** This VP's claims-operations team is buried in denied-claim appeals and
+grievances. Case workers hop between systems to answer one question - *is this member
+eligible, why was the claim denied, has this provider been flagged, what does the evidence
+say?* - while the plan pays twice for denials that get overturned on appeal, driving up the
+VP's cost-per-claim and hurting the overturn rate they are measured on.
 
 ## The business outcome (read this first)
 
@@ -23,9 +28,10 @@ used here (executed live, see [`evidence/RUN_EVIDENCE.md`](evidence/RUN_EVIDENCE
 
 **Value framing.** For a plan handling tens of thousands of appeals a year, compressing
 per-case triage from minutes to seconds and steering reviewers to the highest-yield denial
-reasons and providers is a direct hit on administrative cost, overturn-driven rework, and
-improper-payment leakage - while improving the member and provider experience (regulated
-CMS turnaround clocks).
+reasons and providers moves the exact metrics these executives are compensated on: the
+**VP of Claims Operations'** administrative cost per claim and overturn rate, and the
+**CFO's medical loss ratio** (via cut improper-payment leakage and avoidable medical spend) -
+while improving the member and provider experience against regulated CMS turnaround clocks.
 
 ## The data journey - one connected pipeline, six Databricks layers
 

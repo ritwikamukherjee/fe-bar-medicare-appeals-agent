@@ -14,16 +14,20 @@ A payer-integrity build on Databricks for a Medicare Advantage / Medicaid health
 
 ## Slide 1 - The business problem
 
+**Whose problem: the VP of Claims Operations.** Their scorecard is the appeal-overturn rate,
+appeal cycle time against CMS clocks, and administrative cost per claim.
+
 **Denied-claim appeals are expensive, slow, and repetitive.**
 
 - Case workers hop across systems to triage one appeal: eligibility, denial reason,
   provider history, clinical evidence.
 - Regulated **CMS turnaround clocks** are ticking the whole time.
 - A large share of denials are **overturned on appeal** - the plan adjudicates and pays
-  for the same claim twice.
+  for the same claim twice, driving up cost per claim.
 
-> For the VP of Claims Ops: this is administrative cost + rework + compliance risk.
-> For the Data lead: it's four data domains that never get joined at decision time.
+> VP of Claims Operations: administrative cost per claim, overturn rate, CMS compliance.
+> CFO: the denied-dollar exposure and leakage roll into medical loss ratio (MLR).
+> Chief Medical Officer: owns the "not medically necessary" overturns.
 
 ---
 
@@ -38,8 +42,9 @@ On the book of business analyzed (executed live):
 | Overturn rate on top-2 denial reasons | **~24-25%** (Prior-auth-not-obtained: 323 appeals; Not-medically-necessary: 287) |
 | Pending claims exposure | $1.78M |
 
-**One in four** denials on the highest-volume reasons is reversed later. That is the
-rework we go after.
+**One in four** denials on the highest-volume reasons is reversed later. That $3.14M and the
+leakage behind it roll straight into the **CFO's medical loss ratio**; the overturn rate and
+double-adjudication land on the **VP of Claims Operations'** scorecard. That is what we move.
 
 ---
 
@@ -84,15 +89,16 @@ Committed as text in the repo's `evidence/`:
 
 ---
 
-## Slide 6 - Business outcomes
+## Slide 6 - Business outcomes (mapped to who owns them)
 
-- **Triage time:** minutes → seconds per appeal, against CMS clocks.
-- **Rework reduction:** target the ~24-25% overturn reasons to stop paying twice.
-- **Improper-payment protection:** a ready-made, prioritized payment-integrity work queue.
-- **Scales the team, not headcount:** analysts self-serve governed answers; reviewers start
-  with the highest-yield work.
+- **Admin cost per claim (VP Claims Ops):** triage minutes → seconds, faster appeal cycle time.
+- **Overturn rate (VP Claims Ops):** cut the ~24-25% overturn reasons to stop paying twice.
+- **Medical loss ratio (CFO):** cut improper-payment leakage and avoidable spend from the
+  $3.14M denied-claim pool.
+- **Medical-necessity defensibility (CMO):** clinical evidence attached to appeals.
+- **Scales the team, not headcount:** analysts self-serve; reviewers start highest-yield.
 
-*Directly acts on the $3.14M denied-claim pool and the overturn-driven rework behind it.*
+*Every number on slide 2 maps to a metric a named executive is compensated on.*
 
 ---
 
@@ -123,6 +129,7 @@ Green-light a scoped pilot on one line of business:
 
 1. Point Lakeflow at a de-identified extract.
 2. Stand up the app for a triage pod.
-3. Measure triage time and overturn-rework reduction over one quarter.
+3. Measure the VP's metrics over one quarter: administrative cost per claim, appeal cycle
+   time, and overturn rate - with the MLR impact of cut leakage reported to the CFO.
 
 **Low incremental cost - it reuses the governed lakehouse you already own.**

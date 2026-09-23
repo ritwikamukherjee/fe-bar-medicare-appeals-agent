@@ -16,15 +16,25 @@ A national Medicaid / Medicare Advantage managed-care payer (anonymized; synthet
 Healthcare - health insurance payer (government-sponsored managed care: Medicare Advantage, Medicaid, D-SNP).
 
 ## What is the business challenge you are solving? *
-A health plan's claims-operations team is overwhelmed by denied-claim **appeals and
-grievances**. To triage a single case, a worker pieces together answers from separate
+**Whose problem this is.** The accountable owner is the **VP of Claims Operations**, whose
+scorecard is exactly these numbers: the **appeal-overturn rate**, **appeal cycle time**
+against CMS turnaround clocks, and **administrative cost per claim** (cost-to-adjudicate).
+The **denied-dollar exposure and improper-payment leakage roll up to the CFO's medical loss
+ratio (MLR)**, and the **"not medically necessary" overturns sit on the Chief Medical
+Officer's** clinical-policy scorecard. The VP of Claims Operations is the funding buyer; the
+CFO is the economic sponsor; the CMO is the clinical stakeholder.
+
+**The problem.** This VP's claims-operations team is overwhelmed by denied-claim **appeals
+and grievances**. To triage a single case, a worker pieces together answers from separate
 systems - is the member eligible, why was the claim denied, has the provider been flagged,
 what clinical evidence supports medical necessity - which is slow and inconsistent, and it
-runs against regulated CMS turnaround clocks. Worse, a large share of denials are
-**overturned on appeal**, so the plan pays to adjudicate the same claim twice and erodes
-the member and provider experience. The team needs to (1) triage any appeal in seconds with
-a governed, traceable answer, and (2) see *where* denials and overturns concentrate so they
-can prevent avoidable rework and route payment-integrity risk to the front of the queue.
+runs against regulated CMS turnaround clocks that the VP is measured on. Worse, a large share
+of denials are **overturned on appeal**, so the plan pays to adjudicate the same claim twice
+(driving up administrative cost per claim and hurting the overturn-rate scorecard) and erodes
+the member and provider experience. The team needs to (1) triage any appeal in seconds with a
+governed, traceable answer, and (2) see *where* denials and overturns concentrate so they can
+prevent avoidable rework and route payment-integrity risk to the front of the queue - moving
+the specific metrics the VP, CFO, and CMO are compensated on.
 
 ## How does your Databricks solution address this challenge? *
 An **end-to-end data journey on Databricks**, integrated across six layers over one governed
@@ -82,15 +92,19 @@ LLM-as-judge scaffolding) for the agent.
   Postgres, while analytics stays on the lakehouse - one journey, right engine per job.
 
 ## What are the business outcomes and impact?
-- **Faster triage.** One governed answer per appeal in seconds instead of a multi-system,
-  multi-minute hunt - directly reducing per-case handling time against CMS turnaround clocks.
-- **Less overturn-driven rework.** The overturn analysis (evidence §3) shows the two
-  highest-volume denial reasons overturned ~24-25% of the time. Targeting those reasons cuts
-  denials the plan would have paid to reverse anyway.
-- **Improper-payment protection.** The cross-domain query (evidence §4) surfaces providers
-  who pair a high denial rate with a fraud indicator - a prioritized payment-integrity work
-  queue out of the box.
-- **Quantified exposure.** ~$18.3M billed on the book, with **$3.14M concentrated in denied
-  claims** feeding appeals/rework (evidence §5). The solution acts directly on that pool.
+Each outcome is tied to the metric a named executive is measured on:
+- **Lower administrative cost per claim (VP of Claims Operations).** One governed answer per
+  appeal in seconds instead of a multi-system, multi-minute hunt cuts per-case handling time
+  and appeal cycle time against CMS turnaround clocks - the VP's core operational scorecard.
+- **Better overturn rate, less double-adjudication (VP of Claims Operations).** The two
+  highest-volume denial reasons are overturned ~24-25% of the time (evidence §3). Preventing
+  those avoidable denials improves the overturn rate the VP owns and stops the plan paying to
+  reverse the same claim twice.
+- **Protected medical loss ratio (CFO).** ~$18.3M billed on the book, with **$3.14M
+  concentrated in denied claims** feeding appeals/rework (evidence §5), plus the improper-payment
+  leakage the cross-domain provider-fraud query surfaces (evidence §4). Cutting leakage and
+  avoidable medical spend acts directly on the CFO's MLR.
+- **Defensible medical-necessity decisions (CMO).** ClinicalTrials.gov evidence attached to
+  "not medically necessary" appeals strengthens the clinical-policy scorecard the CMO owns.
 - **Scales the team, not the headcount.** Analysts self-serve governed answers in natural
   language; reps find precedent cases instantly; reviewers start with the highest-yield work.

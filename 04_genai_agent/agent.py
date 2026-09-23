@@ -9,7 +9,7 @@ ResponsesAgent that orchestrates the same 4 tools:
   3. UC MCP connection  raven_medicare_mcp        (Medicare Part D drug lookups)
   4. UC MCP connection  conn_clinicaltrials       (ClinicalTrials.gov)
 
-Output shape matches the Mosaic AI Agent Framework ResponsesAgent schema,
+Output shape matches the Databricks Agent Framework ResponsesAgent schema,
 which the existing FastAPI app (server/routes/chat.py) already understands.
 """
 
